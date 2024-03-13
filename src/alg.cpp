@@ -1,6 +1,9 @@
 // Copyright 2021 NNTU-CS
+#include <iostream>
+#include <algorithm>
 
 int countPairs1(int* arr, int len, int value) {
+    std::sort(arr, arr + len);
     int dlchet = 0;
     for (int i = 0; i < len; i++) {
         for (int j = i + 1; j < len; j++) {
@@ -12,6 +15,7 @@ int countPairs1(int* arr, int len, int value) {
 }
 
 int countPairs2(int* arr, int len, int value) {
+    std::sort(arr, arr + len);
     int dlchet = 0, dlleft = 0, dlright = len - 1;
     while (dlleft < dlright) {
         int a = 1, b = 1;
@@ -70,6 +74,7 @@ int binarySearch(int arr[], int size, int value) {
 }
 
 int countPairs3(int arr[], int len, int value) {
+    std::sort(arr, arr + len);
     int count = 0;
     for (int i = 0; i < len; i++) {
         count += binarySearch(arr + i + 1, len - i - 1, value - arr[i]);
