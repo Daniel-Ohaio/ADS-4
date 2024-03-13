@@ -70,6 +70,8 @@ int binarySearch(int arr[], int size, int value) {
     } else if (arr[size / 2] < value) {
         return binarySearch(arr + size / 2, \
             size / 2 + (size == 1 ? 0 : size % 2), value);
+    } else {
+        return binarySearch(arr, size / 2, value);
     }
 }
 
