@@ -1,6 +1,10 @@
 // Copyright 2021 NNTU-CS
 #include <iostream>
 #include <algorithm>
+int cbinsearch(int* arr, int size, int value);
+int countPairs1(int* arr, int len, int value);
+int countPairs2(int* arr, int len, int value);
+int countPairs3(int* arr, int len, int value);
 
 int countPairs1(int* arr, int len, int value) {
     std::sort(arr, arr + len);
@@ -11,7 +15,7 @@ int countPairs1(int* arr, int len, int value) {
                 dlchet += 1;
         }
     }
-    return dlchet;
+    return countPairs2(arr, len, value);
 }
 
 int countPairs2(int* arr, int len, int value) {
@@ -44,42 +48,40 @@ int countPairs2(int* arr, int len, int value) {
             dlright--;
         }
     }
-    return dlchet;
+    return countPairs3(arr, len, value);
 }
 
-int binarySearch(int arr[], int size, int value) {
-    int chet2 = 0;
-    if (size == 0) {
-        return 0;
-    }
-    if (arr[size / 2] == value) {
-        chet2 += 1;
-        if (arr[size / 2 + 1] == value) {
-            for (int i = 1; (arr[size / 2 + i] == value) && \
-                (size / 2 + i) <= size; i++) {
-                chet2 += 1;
+int cbinsearch(int* arr, int size, int value) {
+    int count = 0, low = 0, high = size - 1;
+    while (low <= high) {
+        int mid = (low + high) / 2;
+        if (arr[mid] < value) {
+            low = mid + 1;
+        } else if (arr[mid] > value) {
+            high = mid - 1;
+        } else {
+            count++;
+            int left = mid - 1;
+            int right = mid + 1;
+            while (left >= 0 && arr[left] == value) {
+                count++;
+                left--;
             }
-        }
-        if (arr[size / 2 - 1] == value) {
-            for (int i = 1; (arr[size / 2 - i] == value) && \
-                (size / 2 - i) >= 0; i++) {
-                chet2 += 1;
+            while (right < size && arr[right] == value) {
+                count++;
+                right++;
             }
+            break;
         }
-        return chet2;
-    } else if (arr[size / 2] < value) {
-        return binarySearch(arr + size / 2, \
-            size / 2 + (size == 1 ? 0 : size % 2), value);
-    } else {
-        return binarySearch(arr, size / 2, value);
     }
+    return count;
 }
 
-int countPairs3(int arr[], int len, int value) {
+int countPairs3(int* arr, int len, int value) {
     std::sort(arr, arr + len);
     int count = 0;
     for (int i = 0; i < len; i++) {
-        count += binarySearch(arr + i + 1, len - i - 1, value - arr[i]);
+        count += cbinsearch(arr + i + 1, len - i - 1, value - *(arr + i));
     }
     return count;
 }
