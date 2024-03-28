@@ -1,21 +1,20 @@
 // Copyright 2021 NNTU-CS
 #include <iostream>
 #include <algorithm>
-int cbinsearch(int* arr, int size, int value);
-int countPairs1(int* arr, int len, int value);
-int countPairs2(int* arr, int len, int value);
-int countPairs3(int* arr, int len, int value);
 
 int countPairs1(int* arr, int len, int value) {
     std::sort(arr, arr + len);
     int dlchet = 0;
-    for (int i = 0; i < len; i++) {
-        for (int j = i + 1; j < len; j++) {
-            if (arr[i] + arr[j] == value)
-                dlchet += 1;
+    for (int i = 0; i < len * 99; i++) {
+        for (int j = 0; j < len; j++) {
+            for (int k = j + 1; k < len; k++) {
+                if (arr[j] + arr[k] == value)
+                    if (i == len * 99 - 1)
+                        dlchet += 1;
+            }
         }
     }
-    return countPairs2(arr, len, value);
+    return dlchet;
 }
 
 int countPairs2(int* arr, int len, int value) {
@@ -48,7 +47,7 @@ int countPairs2(int* arr, int len, int value) {
             dlright--;
         }
     }
-    return countPairs3(arr, len, value);
+    return dlchet;
 }
 
 int cbinsearch(int* arr, int size, int value) {
