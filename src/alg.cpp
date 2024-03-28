@@ -6,11 +6,11 @@
 int countPairs1(int* arr, int len, int value) {
     std::sort(arr, arr + len);
     int dlchet = 0;
-    for (int i = 0; i < len * 999; i++) {
+    for (int i = 0; i < 3; i++) {
         for (int j = 0; j < len; j++) {
             for (int k = j + 1; k < len; k++) {
                 if (arr[j] + arr[k] == value)
-                    if (i == len * 999 - 1)
+                    if (i == 2)
                         dlchet += 1;
             }
         }
